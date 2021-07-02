@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+  <title>Document</title>
+  <style>
+    body{
+      background-image: url("../static/car2.gif");
+      background-repeat: no-repeat;
+      background-size:cover;
+      
+    }
+
+    table {
+      border-collapse: separate;
+      border-spacing: 0 5px;
+      padding:20px;
+      background-color:rgba(253, 253, 253, 0.493);
+      
+    }
+
+    td {
+      padding: 5px;
+      text-align: center;
+      
+    }
+  </style>
+</head>
+
+<body>
+  <h1 style="text-align: center; font-weight:bold" class="text-danger">SECOND HAND CAR PRICE PREDICTION</h1><br><br>
+  <form action="predict" method="POST" style="text-align:center; font-size:30px;">
+    <table style="margin-left: auto; margin-right:auto;">
+      <tr>
+        <td style="width:250px; text-align:left;"><label>Perchase Year</label></td>
+        <td>:</td>
+        <td style="width:250px;"><input style=" padding: 10px; font-size:20px;" type="number" min="1950" max="2022"
+            id="year" name="year" required/></td>
+      </tr>
+      <tr>
+        <td style="text-align:left;"><label>Seller Type</label></td>
+        <td>:</td>
+        <td><select type="text" id="seller_type" name="seller_type" style="padding: 10px; font-size:20px;" required>
+            <option value="Individual">Individual</option>
+            <option value="Dealer">Dealer</option>
+            <option value="Trustmark Dealer">Trustmark Dealer</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align:left;"><label>Km Driven</label></td>
+        <td>:</td>
+        <td><input type="number" max="9999999" id="km_driven" name="km_driven" style="padding: 10px; font-size:20px;" required />
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align:left;"><label>Owner Type</label></td>
+        <td>:</td>
+        <td><select type="text" id="owner_type" name="owner_type" style="padding: 10px; font-size:20px;" required>
+            <option value="First Owner">First Owner</option>
+            <option value="Second Owner">Second Owner</option>
+            <option value="Third Owner">Third Owner</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align:left;"><label>Fuel Type</label></td>
+        <td>:</td>
+        <td><select type="text" id="fuel_type" name="fuel_type" style="padding: 10px; font-size:20px;" required>
+            <option value="Petrol">Petrol</option>
+            <option value="Diesel">Diesel</option>
+            <option value="CNG">CNG</option>
+            <option value="LPG">LPG</option>
+            <option value="Electric">Electric</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align:left;"><label>Transmisssion Type</label></td>
+        <td>:</td>
+        <td><select type="text" id="transmission_tyoe" name="transmission_type" style="padding: 10px; font-size:20px;" required>
+            <option value="Manual">Manual</option>
+            <option value="Automatic">Automatic</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align:left;"><label>Seats</label></td>
+        <td>:</td>
+        <td><input type="number" min="5" max="14" id="seats" name="seats" style="padding: 10px; font-size:20px;" required/></td>
+      </tr>
+      <tr>
+        <td style="text-align:left;"><label>Company</label></td>
+        <td>:</td>
+        <td><select type="text" id="company" name="company" style="padding: 10px; font-size:20px;" required>
+            {%for i in range(0, len)%}
+            <option value="{{Company[i]}}">{{Company[i]}}</option>
+            {%endfor%}
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align:left;"> <label for="fname">Model</label></td>
+        <td>:</td>
+        <td><input type="text" id="model" name="model" style="padding: 10px; font-size:20px;" required/></td>
+      </tr>
+      <tr>
+        <td style="text-align:left;"><label for="fname">Mileage</label></td>
+        <td>:</td>
+        <td><input type="number" max="120" min="0" id="mileage" name="mileage" placeholder="KM Per Litre"
+            style="padding: 10px; font-size:20px;" required/></td>
+      </tr>
+      <tr>
+        <td style="text-align:left;"><label for="fname">Engine(CC)</label></td>
+        <td>:</td>
+        <td><input type="number" id="engine" name="engine" min="0" max="7000" placeholder="CC"
+            style="padding: 10px; font-size:20px;" required/></td>
+      </tr>
+      <tr>
+        <td style="text-align:left;"><label>Max price</label></td>
+        <td>:</td>
+        <td><input type="number" id="max_price" min="50000" name="max_price" style="padding: 10px; font-size:20px;" required/>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align:left;"><label>Min price</label></td>
+        <td>:</td>
+        <td><input type="number" min="50000" id="min_price" name="min_price" style="padding: 10px;font-size:20px;" required/>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td><input type="reset" class="btn btn-warning" value="Reset" style="padding: 10px; font-size:30px;"/></td>
+        <td><input type="submit" class="btn btn-danger" value="Predict" style="padding: 10px; font-size:30px;"></td>
+      </tr>
+    </table>
+  </form>
+
+  <div style="margin-top:50px;" class="alert alert-success" role="alert">
+    <h1 style="text-align: center; font-size:50px;">{{price}}</h1>
+  </div>
+    </div>
+</body>
+
+</html>
